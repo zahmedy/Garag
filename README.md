@@ -2,39 +2,45 @@
 Market Place for Apartments
 
 ```
-shiqah/
+garag/
   apps/
-    web/                # Next.js
-    api/                # FastAPI
-       app/
-            main.py
-            core/
-                config.py
-                security.py
-                deps.py
-            models/
-            schemas/
-            api/
-                v1/
-                routes/
-                    auth.py
-                    listings.py
-                    search.py
-                    leads.py
-                    admin.py
-            services/
-                search_index.py
-                media.py
-                notifications.py
-            db/
-                session.py
-                migrations/   # Alembic
-    worker/             # celery/rq worker
-  packages/
-    shared/             # shared types (optional)
+    api/
+      app/
+        api/v1/routes/
+          auth.py
+          cars.py
+          admin.py
+          media.py
+        core/
+          config.py
+          security.py
+          deps.py
+        db/
+          session.py
+        models/
+          user.py
+          car.py
+        schemas/
+          auth.py
+          car.py
+          media.py
+        services/
+          opensearch.py
+          s3.py
+        tasks/
+          worker.py
+          indexer.py
+        main.py
+      alembic.ini
+      pyproject.toml
+      Dockerfile
+      alembic/
+        env.py
+        script.py.mako
+        versions/
   infra/
-    docker/
     compose.yaml
-  docs/
+  .env.example
+  README.md
 
 ```
