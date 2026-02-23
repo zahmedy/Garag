@@ -1,0 +1,27 @@
+# infra/compose.yaml
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: shiqah
+      POSTGRES_PASSWORD: shiqah
+      POSTGRES_DB: shiqah
+    ports: ["5432:5432"]
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7
+    ports: ["6379:6379"]
+
+  opensearch:
+    image: opensearchproject/opensearch:2
+    environment:
+      - discovery.type=single-node
+      - plugins.security.disabled=true
+      - OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m
+    ports:
+      - "9200:9200"
+
+volumes:
+  pgdata:
