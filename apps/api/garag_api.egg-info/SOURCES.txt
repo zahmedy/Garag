@@ -1,4 +1,5 @@
 pyproject.toml
+app/__init__.py
 app/main.py
 app/api/v1/routes/__init__.py
 app/api/v1/routes/admin.py
