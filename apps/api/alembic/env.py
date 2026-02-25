@@ -1,8 +1,8 @@
+import os
 from logging.config import fileConfig
+
 from alembic import context
-from sqlmodel import SQLModel
-from app.core.config import settings
-from app.db.session import engine
+from sqlmodel import SQLModel, create_engine
 
 # import models so metadata is registered
 from app.models.user import User  # noqa
@@ -14,7 +14,11 @@ fileConfig(config.config_file_name)
 target_metadata = SQLModel.metadata
 
 def run_migrations_online():
-    connectable = engine
+    database_url = os.getenv("DATABASE_URL") or config.get_main_option("sqlalchemy.url")
+    if not database_url or database_url.startswith("driver://"):
+        raise RuntimeError("Set DATABASE_URL before running alembic migrations.")
+
+    connectable = create_engine(database_url, pool_pre_ping=True)
     with connectable.connect() as connection:
         context.configure(
             connection=connection,
