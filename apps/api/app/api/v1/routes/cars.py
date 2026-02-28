@@ -16,6 +16,16 @@ def ensure_owner(car: CarListing, user: User):
         raise HTTPException(status_code=403, detail="Not your listing")
 
 
+def to_car_out(car: CarListing) -> CarOut:
+    data = car.model_dump()
+    status = data.get("status")
+    if isinstance(status, CarStatus):
+        data["status"] = status.value
+    elif status is not None:
+        data["status"] = str(status)
+    return CarOut(**data)
+
+
 @router.post("/cars", response_model=CarOut)
 def create_car(
     payload: CarCreate,
@@ -35,7 +45,7 @@ def create_car(
     session.add(car)
     session.commit()
     session.refresh(car)
-    return CarOut(**car.model_dump(), status=car.status.value)
+    return to_car_out(car)
 
 
 @router.get("/cars/{car_id}", response_model=CarOut)
@@ -48,7 +58,7 @@ def get_car(
     if not car:
         raise HTTPException(status_code=404, detail="Not found")
     ensure_owner(car, user)
-    return CarOut(**car.model_dump(), status=car.status.value)
+    return to_car_out(car)
 
 
 @router.patch("/cars/{car_id}", response_model=CarOut)
@@ -81,7 +91,7 @@ def update_car(
     session.add(car)
     session.commit()
     session.refresh(car)
-    return CarOut(**car.model_dump(), status=car.status.value)
+    return to_car_out(car)
 
 
 @router.get("/seller/cars", response_model=list[CarOut])
@@ -92,7 +102,7 @@ def my_cars(
     cars = session.exec(
         select(CarListing).where(CarListing.owner_id == user.id).order_by(CarListing.created_at.desc())
     ).all()
-    return [CarOut(**c.model_dump(), status=c.status.value) for c in cars]
+    return [to_car_out(c) for c in cars]
 
 
 @router.post("/cars/{car_id}/submit", response_model=CarOut)
@@ -121,4 +131,4 @@ def submit_car(
     session.add(car)
     session.commit()
     session.refresh(car)
-    return CarOut(**car.model_dump(), status=car.status.value)
+    return to_car_out(car)
