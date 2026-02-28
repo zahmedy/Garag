@@ -26,10 +26,12 @@ def verify_otp(payload: OTPVerify, session: Session = Depends(get_session)):
         session.commit()
         session.refresh(user)
     else:
+        if user.is_banned:
+            raise HTTPException(status_code=403, detail="User is banned")
         if not user.verified_at:
             user.verified_at = datetime.utcnow()
             session.add(user)
             session.commit()
 
-    token = create_access_token(subject=user.phone_e164)
+    token = create_access_token(subject=str(user.id))
     return TokenResponse(access_token=token)
