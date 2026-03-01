@@ -1,5 +1,5 @@
 # GARAJ
-Market Place for Apartments
+Market Place for Used Cars
 
 ```
 garaj/
