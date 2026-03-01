@@ -2,9 +2,9 @@ services:
   db:
     image: postgres:16
     environment:
-      POSTGRES_USER: garag
-      POSTGRES_PASSWORD: garag
-      POSTGRES_DB: garag
+      POSTGRES_USER: garaj
+      POSTGRES_PASSWORD: garaj
+      POSTGRES_DB: garaj
     ports: ["5432:5432"]
     volumes:
       - pgdata:/var/lib/postgresql/data

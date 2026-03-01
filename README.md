@@ -1,8 +1,8 @@
-# GARAG
+# GARAJ
 Market Place for Apartments
 
 ```
-garag/
+garaj/
   apps/
     api/
       app/

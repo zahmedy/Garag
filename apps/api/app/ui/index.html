@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>GARAG UI</title>
+  <title>GARAJ UI</title>
   <style>
     :root {
       --bg: #f7f7f9;
@@ -91,7 +91,7 @@
 <body>
   <main class="wrap">
     <section class="card">
-      <h1>GARAG Dev UI</h1>
+      <h1>GARAJ Dev UI</h1>
       <div class="row">
         <label>
           Phone (E.164)
@@ -133,7 +133,7 @@
     const userOutEl = document.getElementById("userOut");
     const listingsWrapEl = document.getElementById("listingsWrap");
 
-    const saved = localStorage.getItem("garag_token");
+    const saved = localStorage.getItem("garaj_token");
     if (saved) tokenEl.value = saved;
 
     function setStatus(text, isError = false) {
@@ -207,7 +207,7 @@
         });
         const data = await parseResponse(res);
         tokenEl.value = data.access_token || "";
-        localStorage.setItem("garag_token", tokenEl.value);
+        localStorage.setItem("garaj_token", tokenEl.value);
         setStatus("Token updated.");
       } catch (err) {
         setStatus(err.message || "Verify OTP failed.", true);
